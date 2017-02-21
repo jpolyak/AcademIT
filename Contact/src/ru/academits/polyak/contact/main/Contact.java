@@ -1,11 +1,11 @@
-package ru.academits.polyak.contact;
+package ru.academits.polyak.contact.main;
 
-class Contact {
+public class Contact {
     private String name;
     private String surname;
-    private int phoneNumber;
+    private String phoneNumber;
 
-    public Contact(String name, String surname, int phoneNumber) {
+    public Contact(String name, String surname, String phoneNumber) {
         this.name = name;
         this.surname = surname;
         this.phoneNumber = phoneNumber;
@@ -27,11 +27,11 @@ class Contact {
         surname = newSername;
     }
 
-    public int getPhoneNumber() {
+    public String getPhoneNumber() {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(int newPhoneNumber) {
+    public void setPhoneNumber(String newPhoneNumber) {
         phoneNumber = newPhoneNumber;
     }
 }

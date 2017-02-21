@@ -1,4 +1,6 @@
-package ru.academits.polyak.vector;
+package ru.academits.polyak.vector.main;
+
+import ru.academits.polyak.vector.Vector;
 
 public class Main {
     public static void main(String[] args) {
@@ -32,7 +34,7 @@ public class Main {
         System.out.printf("v4 hash code = %d, v5 hash code = %d, v6 hash code = %d\n", vector4.hashCode(), vector5.hashCode(), vector6.hashCode());
         System.out.println("v4 + v5 static = " + Vector.add(vector4, vector5));
         System.out.println("v4 - v5 static = " + Vector.subtract(vector4, vector5));
-        System.out.printf("v4 * v5 = %.2f", Vector.scalarProduct(vector4, vector5));
+        System.out.printf("v4 * v5 = %.2f\n", Vector.scalarProduct(vector4, vector5));
         Vector vector7 = new Vector(-5);
     }
 }

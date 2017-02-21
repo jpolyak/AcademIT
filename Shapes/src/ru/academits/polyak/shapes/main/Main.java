@@ -1,4 +1,8 @@
-package ru.academits.polyak.shapes;
+package ru.academits.polyak.shapes.main;
+
+import ru.academits.polyak.shapes.*;
+
+import java.util.Arrays;
 
 public class Main {
     public static Shape maxAreaShape(Shape[] shapes) {
@@ -14,23 +18,24 @@ public class Main {
     }
 
     public static Shape secondShapeByPerimeter(Shape[] shapes) {
-        double perimeter = 0;
-        int maxPerimeterShapeIndex = 0;
-        for (int i = 0; i < shapes.length; i++) {
-            if (perimeter < shapes[i].getPerimeter()) {
-                perimeter = shapes[i].getPerimeter();
-                maxPerimeterShapeIndex = i;
+        Shape[] array = Arrays.copyOf(shapes, shapes.length);
+        for (int i = 0; i < array.length - 1; i++) {
+            Shape temporaryShape = array[i];
+
+            double minimumValue = array[i].getPerimeter();
+            int minimumValueIndex = i;
+            for (int j = i + 1; j < array.length; j++) {
+                if (array[j].getPerimeter() < minimumValue) {
+                    minimumValue = array[j].getPerimeter();
+                    minimumValueIndex = j;
+                }
             }
+
+            int k = minimumValueIndex;
+            array[i] = array[k];
+            array[k] = temporaryShape;
         }
-        double secondPerimeter = 0;
-        int secondShapeByPerimeterIndex = 0;
-        for (int i = 0; i < shapes.length; i++) {
-            if ((i != maxPerimeterShapeIndex) && (shapes[i].getPerimeter() != perimeter) && (secondPerimeter < shapes[i].getPerimeter())) {
-                secondPerimeter = shapes[i].getPerimeter();
-                secondShapeByPerimeterIndex = i;
-            }
-        }
-        return shapes[secondShapeByPerimeterIndex];
+        return array[array.length - 2];
     }
 
     public static void main(String[] args) {

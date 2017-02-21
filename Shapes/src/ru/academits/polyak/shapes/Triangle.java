@@ -29,8 +29,12 @@ public class Triangle implements Shape {
         return Math.abs((x1 - x3) * (y2 - y3) - (x2 - x3) * (y1 - y3)) / 2;
     }
 
+    private double intervalLength(double x1, double x2, double y1, double y2) {
+        return Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2));
+    }
+
     public double getPerimeter() {
-        return Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2)) + Math.sqrt(Math.pow(x2 - x3, 2) + Math.pow(y2 - y3, 2)) + Math.sqrt(Math.pow(x3 - x1, 2) + Math.pow(y3 - y1, 2));
+        return intervalLength(x1, x2, y1, y2) + intervalLength(x2, x3, y2, y3) + intervalLength(x1, x3, y1, y3);
     }
 
     public String toString() {
@@ -57,11 +61,6 @@ public class Triangle implements Shape {
             return false;
         }
         Triangle triangle = (Triangle) o;
-        return ((this.x1 == triangle.x1) && (this.y1 == triangle.y1) && (this.x2 == triangle.x2) && (this.y2 == triangle.y2) && (this.x3 == triangle.x3) && (this.y3 == triangle.y3)) ||
-                ((this.x1 == triangle.x1) && (this.y1 == triangle.y1) && (this.x2 == triangle.x3) && (this.y2 == triangle.y3) && (this.x3 == triangle.x2) && (this.y3 == triangle.y2)) ||
-                ((this.x1 == triangle.x2) && (this.y1 == triangle.y2) && (this.x2 == triangle.x1) && (this.y2 == triangle.y1) && (this.x3 == triangle.x3) && (this.y3 == triangle.y3)) ||
-                ((this.x1 == triangle.x2) && (this.y1 == triangle.y2) && (this.x2 == triangle.x3) && (this.y2 == triangle.y3) && (this.x3 == triangle.x1) && (this.y3 == triangle.y1)) ||
-                ((this.x1 == triangle.x3) && (this.y1 == triangle.y3) && (this.x2 == triangle.x1) && (this.y2 == triangle.y1) && (this.x3 == triangle.x2) && (this.y3 == triangle.y2)) ||
-                ((this.x1 == triangle.x3) && (this.y1 == triangle.y3) && (this.x2 == triangle.x2) && (this.y2 == triangle.y2) && (this.x3 == triangle.x1) && (this.y3 == triangle.y1));
+        return ((this.x1 == triangle.x1) && (this.y1 == triangle.y1) && (this.x2 == triangle.x2) && (this.y2 == triangle.y2) && (this.x3 == triangle.x3) && (this.y3 == triangle.y3));
     }
 }

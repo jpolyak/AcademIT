@@ -30,57 +30,44 @@ public class Range {
     }
 
     public void printRange() {
-        if (this == null) {
-            System.out.println("null");
-        } else {
-            System.out.println("(" + from + ", " + to + ")");
-        }
+        System.out.println("(" + from + ", " + to + ")");
     }
 
     public boolean isInside(double point) {
         return point >= from && point <= to;
     }
 
+    public boolean existsIntersection(Range range) {
+        return !((this.to <= range.from) || (range.to <= this.from));
+    }
+
     public Range getIntersection(Range range) {
-        if ((this.to < range.from) || (range.to < this.from)) {
-            return null;
+        if (this.existsIntersection(range)) {
+            return new Range(Math.max(this.from, range.from), Math.min(this.to, range.to));
         }
-        if (this.from <= range.from) {
-            if (this.to <= range.to) {
-                return new Range(range.from, this.to);
-            } else {
-                return new Range(range.from, range.to);
-            }
-        } else {
-            if (range.to <= this.from) {
-                return new Range(this.from, range.to);
-            } else {
-                return new Range(this.from, this.to);
-            }
-        }
+        return null;
     }
 
     public Range[] getUnion(Range range) {
-        if (this.getIntersection(range) == null) {
-            return new Range[]{new Range(this.from, this.to), new Range(range.from, range.to)};
+        if (this.existsIntersection(range)) {
+            return new Range[]{new Range(Math.min(this.from, range.from), Math.max(this.to, range.to))};
         }
-        return new Range[]{new Range(Math.min(this.from, range.from), Math.max(this.to, range.to))};
+        return new Range[]{new Range(this.from, this.to), new Range(range.from, range.to)};
     }
 
     public Range[] getDifference(Range range) {
-        if (range.from < this.from && range.to > this.to) {
-            return null;
+        if (this.existsIntersection(range)) {
+            if (range.from <= this.from) {
+                if (range.to >= this.to) {
+                    return new Range[0];
+                }
+                return new Range[]{new Range(range.to, this.to)};
+            }
+            if (range.to >= this.to) {
+                return new Range[]{new Range(this.from, range.from)};
+            }
+            return new Range[]{new Range(this.from, range.from), new Range(range.to, this.to)};
         }
-        if (this.getIntersection(range) == null) {
-            return new Range[]{new Range(this.from, this.to)};
-        }
-        Range intersection = this.getIntersection(range);
-        if (this.from == intersection.from) {
-            return new Range[]{new Range(intersection.to, this.to)};
-        }
-        if (this.to == intersection.to) {
-            return new Range[]{new Range(this.from, intersection.from)};
-        }
-        return new Range[]{new Range(this.from, intersection.from), new Range(intersection.to, this.to)};
+        return new Range[]{new Range(this.from, this.to)};
     }
 }
